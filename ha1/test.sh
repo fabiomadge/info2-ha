@@ -3,7 +3,7 @@ if [ ! -f "$ha.ml" ]; then
   echo "No $ha.ml file!"
   exit 1
 fi
-cp -f $ha.ml $ha.org.ml
+mv -f $ha.ml $ha.org.ml
 cat ../nostdlib.ml $ha.org.ml > $ha.ml
 ocamlbuild -clean
 ocamlbuild -use-ocamlfind -package kaputt ${ha}_test.native
