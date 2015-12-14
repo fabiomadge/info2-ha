@@ -23,13 +23,21 @@ module Option :
     val get_some : 'a option -> 'a
     val show : ('a -> string) -> 'a option -> string
     val map : ('a -> 'b) -> 'a option -> 'b option
+    val map_default : ('a -> 'b) -> 'b -> 'a option -> 'b
     val bind : 'a option -> ('a -> 'b option) -> 'b option
-    val ( >>= ) : 'a option -> ('a -> 'b option) -> 'b option
     val filter : ('a -> bool) -> 'a option -> 'a option
     val default : 'a -> 'a option -> 'a
-    val ( |? ) : 'a option -> 'a -> 'a
     val try_some : ('a -> 'b) -> 'a -> 'b option
+    module Infix :
+      sig
+        val ( >>= ) : 'a option -> ('a -> 'b option) -> 'b option
+        val ( |? ) : 'a option -> 'a -> 'a
+      end
+    val ( >>= ) : 'a option -> ('a -> 'b option) -> 'b option
+    val ( |? ) : 'a option -> 'a -> 'a
   end
+val ( >>= ) : 'a option -> ('a -> 'b option) -> 'b option
+val ( |? ) : 'a option -> 'a -> 'a
 module List :
   sig
     val cons : 'a -> 'a list -> 'a list
@@ -69,6 +77,8 @@ module List :
     val combine : 'a list -> 'b list -> ('a * 'b) list option
     val merge : ?cmp:('a -> 'a -> int) -> 'a list -> 'a list -> 'a list
     val sort : ?cmp:('a -> 'a -> int) -> 'a list -> 'a list
+    val show : ('a -> string) -> 'a list -> string
+    val flat_map : ('a -> 'b list) -> 'a list -> 'b list
   end
 module Set :
   sig
@@ -80,7 +90,12 @@ module Set :
     val diff : 'a list -> 'a list -> 'a list
   end
 module String :
-  sig val concat : string -> string list -> string val escaped : 'a -> 'a end
+  sig
+    val concat : string -> string list -> string
+    val escaped : 'a -> 'a
+    val explode : string -> char list
+    val implode : char list -> string
+  end
 module Map :
   sig
     type ('k, 'v) t = Empty | Node of 'k * 'v * ('k, 'v) t * ('k, 'v) t

@@ -28,6 +28,9 @@ module Option = struct
   let map f = function
     | Some x -> Some (f x)
     | None -> None
+  let map_default f x = function
+    | Some v -> f v
+    | None -> x
 
   (* if you have possibly failing functions f1, f2, f3 you can bind them together: f1 x >>= f2 >>= f3. why/when could this be useful? *)
   let bind o f = match o with
@@ -160,6 +163,9 @@ module List = struct
     | xs ->
         let xs, ys = split_at (length xs / 2) xs in
         merge ~cmp:cmp (sort ~cmp:cmp xs) (sort ~cmp:cmp ys)
+
+  let show s xs = "[" ^ String.concat ", " (map s xs) ^ "]"
+  let flat_map f xs = flatten @@ map f xs
 end
 
 module Set = struct
@@ -181,6 +187,13 @@ end
 module String = struct
   let concat x xs = List.interleave x xs |> List.fold_left (^) ""
   let escaped x = x (* don't care for now *)
+  let explode s = List.init (String.length s) (fun i -> s.[i])
+  let implode l = String.init (List.length l) (Option.get_some % flip List.at l)
+    (*let res = String.create (List.length l) in
+    let rec implode' i = function
+      | [] -> res
+          | c :: l -> res.[i] <- c; implode' (i + 1) l
+    in implode' 0 l*)
 end
 
 module Map = struct
