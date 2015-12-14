@@ -77,7 +77,7 @@ module Json = struct
 
 
   (* homework *)
-  (* shows the path: we write .foo.bar[1].baz for [Field "foo"; Field "bar"; Index 1' Field "baz"] *)
+  (* shows the path: we write .foo.bar[1].baz for [Field "foo"; Field "bar"; Index 1; Field "baz"] *)
   let rec show_path path = todo ()
 
   (* gets the children, i.e., the values of Object and Array *)
