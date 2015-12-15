@@ -5,16 +5,21 @@ let compareBy f = comp2 compare f
 let id x = x
 let flip f x y = f y x
 let neg f x = not (f x)
-let curry f x y = f (x,y)
-let uncurry f (x,y) = f x y
+let const x _ = x
 
 module Tuple2 = struct
+  let cons x y = x,y
+  let show f1 f2 (x,y) = "("^f1 x^", "^f2 y^")"
   let fst (x,y) = x
   let snd (x,y) = y
   let map1 f (x,y) = f x, y
   let map2 f (x,y) = x, f y
   let map f1 f2 (x,y) = f1 x, f2 y
+  let swap (x,y) = y,x
+  let curry f x y = f (x,y)
+  let uncurry f (x,y) = f x y
 end
+let curry, uncurry = Tuple2.(curry, uncurry)
 
 module Option = struct
   let some x = Some x (* Option monad's return *)
@@ -194,6 +199,8 @@ module String = struct
       | [] -> res
           | c :: l -> res.[i] <- c; implode' (i + 1) l
     in implode' 0 l*)
+  let cons x xs = implode (x::explode xs) (* this is not very efficient... *)
+  let of_char x = implode [x] (* same *)
 end
 
 module Map = struct

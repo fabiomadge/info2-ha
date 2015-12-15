@@ -11,7 +11,7 @@ module Json = struct
     | Array  of t list
   (* t is recursive! offset is used for accesssing inner json values *)
   type offset = Field of string | Index of int (* Field for Object, Index for Array *)
-  (* we write foo.bar[1].baz for [Field "foo"; Field "bar"; Index 1' Field "baz"] *)
+  (* we write foo.bar[1].baz for [Field "foo"; Field "bar"; Index 1; Field "baz"] *)
   type path = offset list
 
   (* example:
@@ -87,4 +87,10 @@ module Json = struct
    * e.g. get_all [Field "foo"] (Array [Null; Object (Map.from_list ["foo", String "one"; "bar", Null]); Object (Map.from_list ["baz", Null; "foo", String "two"])]) = [String "one"; String "two"] *)
   let rec get_all path json = todo ()
 
+  (* parse a string and return some json *)
+  (* simplifications:
+   * - only the same format as produced by show must be supported
+   * - no escaping in strings, i.e., a string contains no quotes
+   *)
+  let from_string s = todo ()
 end

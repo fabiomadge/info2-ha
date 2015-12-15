@@ -5,16 +5,22 @@ val compareBy : ('a -> 'b) -> 'a -> 'a -> int
 val id : 'a -> 'a
 val flip : ('a -> 'b -> 'c) -> 'b -> 'a -> 'c
 val neg : ('a -> bool) -> 'a -> bool
-val curry : ('a * 'b -> 'c) -> 'a -> 'b -> 'c
-val uncurry : ('a -> 'b -> 'c) -> 'a * 'b -> 'c
+val const : 'a -> 'b -> 'a
 module Tuple2 :
   sig
+    val cons : 'a -> 'b -> 'a * 'b
+    val show : ('a -> string) -> ('b -> string) -> 'a * 'b -> string
     val fst : 'a * 'b -> 'a
     val snd : 'a * 'b -> 'b
     val map1 : ('a -> 'b) -> 'a * 'c -> 'b * 'c
     val map2 : ('a -> 'b) -> 'c * 'a -> 'c * 'b
     val map : ('a -> 'b) -> ('c -> 'd) -> 'a * 'c -> 'b * 'd
+    val swap : 'a * 'b -> 'b * 'a
+    val curry : ('a * 'b -> 'c) -> 'a -> 'b -> 'c
+    val uncurry : ('a -> 'b -> 'c) -> 'a * 'b -> 'c
   end
+val curry : ('a * 'b -> 'c) -> 'a -> 'b -> 'c
+val uncurry : ('a -> 'b -> 'c) -> 'a * 'b -> 'c
 module Option :
   sig
     val some : 'a -> 'a option
@@ -95,6 +101,8 @@ module String :
     val escaped : 'a -> 'a
     val explode : string -> char list
     val implode : char list -> string
+    val cons : char -> string -> string
+    val of_char : char -> string
   end
 module Map :
   sig

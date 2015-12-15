@@ -18,4 +18,5 @@ module Json :
     val show_path : offset list -> string
     val get_children : t -> t list
     val get_all : offset list -> t -> t list
+    val from_string : string -> t option
   end
