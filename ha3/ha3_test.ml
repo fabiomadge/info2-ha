@@ -1,10 +1,9 @@
-(* open Batteries *)
 let (%) g f x = g (f x)
 let neg f x = not (f x)
 let uncurry f (x,y) = f x y
 open Kaputt.Abbreviations
 
-module A = Ha3m
+module A = Ha3
 module B = Ha3_sol
 module type S = sig
   module MyList :

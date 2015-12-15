@@ -1,7 +1,7 @@
 open Batteries
 open Kaputt.Abbreviations
 
-module Ha = Ha2m
+module Ha = Ha2
 module Sol = Ha2_sol
 
 let tests = ref []
