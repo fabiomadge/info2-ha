@@ -80,7 +80,7 @@ module Json = struct
   (* shows the path: we write .foo.bar[1].baz for [Field "foo"; Field "bar"; Index 1; Field "baz"] *)
   let rec show_path path = todo ()
 
-  (* gets the children, i.e., the values of Object and Array *)
+  (* gets the immediate children, i.e., the values of Object and Array *)
   let get_children json = todo ()
 
   (* gets all subtrees that match the path (path does not have to start at the root).
