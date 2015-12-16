@@ -5,7 +5,7 @@ module Json = struct
   type t =
     | Null
     | Bool of bool
-    | Number of float
+    | Number of int
     | String of string
     | Object of (string,t) Map.t
     | Array  of t list
@@ -15,12 +15,12 @@ module Json = struct
   type path = offset list
 
   (* example:
-    { "a": null, "b": true, "c": 1.2, "d": "hello \"you\"!", "e": {  }, "f": [0, false, "no"] }
+    { "a": null, "b": true, "c": 2, "d": "hello \"you\"!", "e": {  }, "f": [0, false, "no"] }
   *)
   let rec show = function
     | Null -> "null"
     | Bool x -> string_of_bool x
-    | Number x -> string_of_float x
+    | Number x -> string_of_int x
     | String x -> "\"" ^ String.escaped x ^ "\""
     | Object x -> "{ " ^ String.concat ", " (List.map (fun (k,v) -> show (String k) ^ ": " ^ show v) (Map.to_list x)) ^ " }"
     | Array x -> "[" ^ String.concat ", " (List.map show x) ^ "]"
@@ -90,6 +90,7 @@ module Json = struct
   (* parse a string and return some json *)
   (* simplifications:
    * - only the same format as produced by show must be supported
+   * - numbers are now integers instead of floats
    * - no escaping in strings, i.e., a string contains no quotes
    *)
   let from_string s = todo ()

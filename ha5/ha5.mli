@@ -3,7 +3,7 @@ module Json :
     type t =
         Null
       | Bool of bool
-      | Number of float
+      | Number of int
       | String of string
       | Object of (string, t) Batteries.Map.t
       | Array of t list
